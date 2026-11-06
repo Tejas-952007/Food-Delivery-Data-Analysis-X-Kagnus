@@ -1,0 +1,18 @@
+issue,affected_column,affected_rows,action_taken,reason
+Missing delivery person age,Delivery_person_Age,1854,Retained as NaN,Preserved raw distribution without introducing artificial bias or false assumptions prior to downstream predictive modeling
+Outlier rating above 5.0 scale (value = 6.0),Delivery_person_Ratings,53,Capped rating to 5.0,Standard delivery platform rating scale is strictly 1.0 to 5.0; value 6.0 is an out-of-bounds scale error
+Missing delivery person ratings,Delivery_person_Ratings,1908,Retained as NaN,Preserved true observational state without inventing synthetic feedback scores
+Negative latitude coordinates (sign error in Indian bounds),Restaurant_latitude,431,Applied absolute value abs(lat),India is in Northern Hemisphere (Lat > 0); negative sign is an entry error matching positive delivery coordinates
+Negative longitude coordinates (sign error in Indian bounds),Restaurant_longitude,162,Applied absolute value abs(lon),India is in Eastern Hemisphere (Lon > 0); negative sign is an entry error matching positive delivery coordinates
+Placeholder zero/near-zero GPS coordinates (0.0 and 0.01),"Restaurant_latitude, Restaurant_longitude, Delivery_location_latitude, Delivery_location_longitude",3640,Replaced sentinel coordinates with np.nan,0.0/0.01 coordinates denote missing GPS signals (Null Island) off Africa; masking with NaN prevents corrupted distance calculations while preserving operational records
+Date stored as string object,Order_Date,45584,Parsed to datetime64[ns] (%d-%m-%Y),Standardized temporal field to enable time-series analysis and temporal aggregation
+Excel decimal serial time in order time,Time_Orderd,4068,Converted decimal day fraction to HH:MM:SS,Excel converts timestamps to day fractions when exported improperly; converting restores original 24-hour clock time
+Missing order time,Time_Orderd,1731,Retained as NaN,Order time is missing at source; preserved as missing without fabricating customer placement times
+Excel decimal serial time in pickup time,Time_Order_picked,4127,Converted decimal day fraction to HH:MM:SS,Restores original pickup timestamp from Excel day-fraction format
+Midnight rollover timestamp (24:xx:00),Time_Order_picked,880,Converted 24:xx:00 to 00:xx:00,Standard ISO 24-hour clock notation requires times after midnight to be represented in hour 00
+Missing weather condition,Weather_conditions,616,Retained as NaN,Preserved missing sensor/meteorological logs without guessing weather state
+Missing road traffic density,Road_traffic_density,601,Retained as NaN,Missing telemetry data on traffic density; avoided injecting arbitrary traffic labels
+Missing multiple deliveries count,multiple_deliveries,993,Retained as NaN,Avoided fabricating delivery batch sizes without system logs
+Missing festival indicator,Festival,228,Retained as NaN,Missing festive indicator preserved without assuming non-festival default
+Inconsistent spelling of category label (Metropolitian),City,34093,Standardized Metropolitian to Metropolitan,Corrected spelling variation to ensure clean categorical grouping and reporting
+Missing city classification,City,1200,Retained as NaN,Missing municipal designation preserved for data transparency
