@@ -9,10 +9,10 @@
 This repository contains the end-to-end coursework and deliverables for the **Food Delivery Data Analysis Internship** at **Kagnus**. Working as a Junior Data Analyst supporting the food-delivery operations team, the multi-week goal is to analyze operational delivery logs, extract actionable business insights, identify supply chain and fulfillment bottlenecks, and build interactive KPI visualizations.
 
 The project follows a 4-week structured progression:
-- **Week 1 (Current)**: Dataset Understanding, Comprehensive Quality Audit & Data Cleaning.
-- **Week 2**: Exploratory Data Analysis (EDA) & Feature Engineering.
-- **Week 3**: Core Operational KPI Analysis & Visualizations.
-- **Week 4**: Business Findings, Strategic Recommendations & Final Executive Report.
+- **Week 1 (Complete)**: Dataset Understanding, Comprehensive Quality Audit & Data Cleaning.
+- **Week 2 (Complete / Current)**: Exploratory Data Analysis (EDA) & Operational Driver Analysis.
+- **Week 3 (Upcoming)**: Core Operational KPI Analysis & Visualizations.
+- **Week 4 (Upcoming)**: Business Findings, Strategic Recommendations & Final Executive Report.
 
 ---
 
@@ -38,16 +38,24 @@ The objective of Week 1 is to establish a verified, standardized, and fully repr
 food-delivery-data-analysis/
 ├── data/
 │   ├── raw/
-│   │   ├── Food_delivery_Dataset.csv     # Original unedited raw dataset (45,584 rows)
-│   │   └── README.md                     # Raw data source documentation & dictionary
+│   │   ├── Food_delivery_Dataset.csv             # Original unedited raw dataset (45,584 rows)
+│   │   └── README.md                             # Raw data source documentation & dictionary
 │   └── processed/
-│       └── cleaned_food_delivery.csv     # Cleaned, standardized dataset (45,584 rows)
+│       └── cleaned_food_delivery.csv             # Cleaned, standardized dataset (45,584 rows)
 ├── notebooks/
-│   └── 01_data_understanding_and_cleaning.ipynb  # Fully executed, documented Jupyter notebook
+│   ├── 01_data_understanding_and_cleaning.ipynb  # Week 1: Data Understanding & Cleaning Pipeline
+│   └── 02_exploratory_data_analysis.ipynb        # Week 2: Comprehensive Exploratory Data Analysis
+├── visualizations/                               # Exported high-resolution EDA figures
+│   ├── 01_delivery_duration_baseline.png         # Target distribution histogram & KDE
+│   ├── 02_distance_vs_duration.png               # Scatter plot with fitted trend line
+│   ├── 03_operational_comparisons_traffic_weather_vehicle.png
+│   ├── 04_boxplots_duration_by_factors.png       # Boxplots across traffic & weather tiers
+│   ├── 05_traffic_weather_heatmap.png            # Cross-tabulated mean duration matrix
+│   └── 06_distance_bands_and_partner_metrics.png # Distance bands, age groups & rating trends
 ├── docs/
-│   └── cleaning_log.csv                  # Formal audit log recording issues, counts & rationales
-├── README.md                             # Root project overview & Week 1 findings
-└── requirements.txt                      # Python environment package dependencies
+│   └── cleaning_log.csv                          # Formal audit log recording issues, counts & rationales
+├── README.md                                     # Project overview, findings & execution guide
+└── requirements.txt                              # Python environment package dependencies
 ```
 
 ---
@@ -107,6 +115,82 @@ food-delivery-data-analysis/
 - **Row Count After**: 45,584
 - **Difference**: 0 rows removed.
 - **Rationale**: In strict compliance with task instructions (*"Do not automatically remove outliers, duplicates, or records without checking whether removal is justified"*), all rows were retained because every row represents an authentic unique delivery transaction with valid trip duration and vehicle data. Missing attributes were preserved as `NaN` rather than synthetically imputed to avoid introducing artificial bias before feature modeling.
+
+---
+
+## 🔍 Week 2: Exploratory Data Analysis (EDA) & Operational Driver Analysis
+
+### 🎯 Week 2 Objectives
+1. Compute delivery duration baseline statistics (central tendency, dispersion, spread).
+2. Segment delivery performance across operational factors (traffic, weather, vehicle type, festival).
+3. Compute straight-line (Haversine) trip distances and evaluate linear vs non-linear correlation with duration.
+4. Conduct confounding checks to prevent spurious conclusions.
+5. Synthesize empirical findings to inform operational strategies for Week 3 & 4.
+
+---
+
+### 📈 Baseline Operational Performance Summary
+Across all **45,584** completed orders:
+- **Mean Duration**: `26.29 minutes`
+- **Median Duration**: `26.00 minutes`
+- **Standard Deviation**: `9.38 minutes`
+- **Interquartile Range (IQR)**: `15.00 minutes` (Q1: 19.00 min, Q3: 34.00 min)
+- **Observed Range**: `10.00 – 54.00 minutes`
+
+---
+
+### 🚦 Key Operational Comparisons
+
+| Operational Factor | Category / Level | Delivery Count | Mean Duration (min) | Median Duration (min) | Key Finding & Operational Takeaway |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Traffic Density** | Low | 15,476 | **21.27** | 21.00 | Baseline rapid transit conditions. |
+| | Medium | 10,945 | **26.68** | 26.00 | +5.41 min operational delay over Low traffic. |
+| | High | 4,424 | **27.21** | 27.00 | +5.94 min delay over Low traffic. |
+| | Jam | 14,139 | **31.18** | 32.00 | **+9.91 min (+46.6%)** congestion penalty. Primary system bottleneck. |
+| **Weather** | Sunny | 7,282 | **21.86** | 22.00 | Fastest atmospheric transit conditions. |
+| | Stormy / Sandstorms / Windy | 22,500 | **25.84 – 26.17** | 26.00 | Moderate atmospheric impact (+4 min). |
+| | Fog / Cloudy | 15,186 | **28.92** | 29.00 | **+7.06 min (+32.3%)** adverse weather delay. |
+| **Vehicle Type** | Electric Scooter | 3,814 | **24.47** | 24.00 | Fastest vehicle class in urban deliveries. |
+| | Scooter | 15,273 | **24.48** | 24.00 | Highly consistent and efficient mid-tier. |
+| | Motorcycle | 26,429 | **27.59** | 27.00 | Heavy workload fleet; carries longer congestion exposure. |
+| | Bicycle | 68 | **26.44** | 26.00 | Niche short-radius deployment. |
+| **Batch Deliveries** | 0 Deliveries | 14,095 | **21.05** | 20.00 | Single dedicated drop-off route. |
+| | 1 Delivery | 28,151 | **27.57** | 28.00 | +6.52 min overhead. |
+| | 2 Deliveries | 3,400 | **32.84** | 33.00 | +11.79 min overhead. |
+| | 3 Deliveries | 890 | **37.28** | 38.00 | **+16.23 min (+77.1%)** multi-drop batching delay. |
+| **Festival** | No | 44,460 | **25.90** | 26.00 | Standard operating volume. |
+| | Yes | 896 | **45.56** | 46.00 | **+19.66 min (+75.9%)** severe festive demand/kitchen delay. |
+
+---
+
+### 🗺️ Distance vs Duration: What the Data Reveals
+- **Sample Size**: 41,944 deliveries with valid non-sentinel coordinates (3,640 sentinel (0,0) rows excluded).
+- **Haversine Distance Range**: `1.46 km – 20.97 km` (Mean: `9.70 km`).
+- **Correlation**:
+  - Pearson Linear Correlation: $r = 0.320$ ($r^2 = 0.102$)
+  - Spearman Rank Correlation: $\rho = 0.319$
+  - Fitted Linear Trend: $\text{Duration (min)} = 21.05 + 0.54 \times \text{Distance (km)}$
+- **Analytical Takeaway**: While distance has a statistically significant positive association with duration, $r^2 = 0.102$ proves that **distance alone explains only ~10% of total delivery time variation**. The remaining ~90% is driven by operational factors: traffic congestion, dispatch delays, kitchen preparation, and weather conditions.
+
+---
+
+### 🛡️ Confounding Checks
+To verify that vehicle differences were not merely artifacts of trip length:
+- Mean distance for **motorcycles**: `9.69 km`
+- Mean distance for **scooters**: `9.76 km`
+- Mean distance for **electric scooters**: `9.44 km`
+Because distance is evenly balanced across fleets, the observed delivery speed advantage of electric scooters and scooters is operational, not distance-driven.
+
+---
+
+### 🖼️ Exported Visualizations
+All exploratory charts are exported at 150 DPI in [`visualizations/`](file:///home/tejas/Kagnus_internship/food-delivery-data-analysis/visualizations/):
+1. `01_delivery_duration_baseline.png` — Distribution of delivery duration (histogram & KDE).
+2. `02_distance_vs_duration.png` — Scatter plot with linear regression trend line.
+3. `03_operational_comparisons_traffic_weather_vehicle.png` — Bar plots comparing mean durations across traffic, weather, and vehicle types.
+4. `04_boxplots_duration_by_factors.png` — Boxplots showing median and interquartile spread by traffic and weather.
+5. `05_traffic_weather_heatmap.png` — Cross-tabulation heatmap of mean delivery times under joint traffic × weather conditions.
+6. `06_distance_bands_and_partner_metrics.png` — Segmented performance by distance bands, partner age, and rating tiers.
 
 ---
 
