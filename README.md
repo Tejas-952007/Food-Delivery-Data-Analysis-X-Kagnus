@@ -11,8 +11,8 @@ This repository contains the end-to-end coursework and deliverables for the **Fo
 The project follows a 4-week structured progression:
 - **Week 1 (Complete)**: Dataset Understanding, Comprehensive Quality Audit & Data Cleaning.
 - **Week 2 (Complete)**: Exploratory Data Analysis (EDA) & Operational Driver Analysis.
-- **Week 3 (Complete / Current)**: Visualization & Interpretation.
-- **Week 4 (Upcoming)**: Business Findings, Strategic Recommendations & Final Executive Report.
+- **Week 3 (Complete)**: Visualization & Interpretation (Five Core Charts).
+- **Week 4 (Complete)**: Final Verification, Key Findings, Operational Recommendations & Business Communication.
 
 ---
 
@@ -45,7 +45,8 @@ food-delivery-data-analysis/
 ├── notebooks/
 │   ├── 01_data_understanding_and_cleaning.ipynb  # Week 1: Data Understanding & Cleaning Pipeline
 │   ├── 02_exploratory_data_analysis.ipynb        # Week 2: Comprehensive Exploratory Data Analysis
-│   └── 03_visualization.ipynb                    # Week 3: Visualization & Interpretation
+│   ├── 03_visualization.ipynb                    # Week 3: Visualization & Interpretation
+│   └── 04_final_analysis.ipynb                   # Week 4: Final Verification, Findings & Recommendations
 ├── visualizations/                               # Exported high-resolution figures (150 DPI)
 │   ├── 01_delivery_duration_distribution.png     # Week 3: Delivery duration histogram
 │   ├── 02_traffic_comparison.png                 # Week 3: Median duration by traffic category
@@ -134,7 +135,7 @@ Across all **45,584** completed orders:
 - **Mean Duration**: `26.29 minutes`
 - **Median Duration**: `26.00 minutes`
 - **Standard Deviation**: `9.38 minutes`
-- **Interquartile Range (IQR)**: `15.00 minutes` (Q1: 19.00 min, Q3: 34.00 min)
+- **Interquartile Range (IQR)**: `13.00 minutes` (Q1: 19.00 min, Q3: 32.00 min)
 - **Observed Range**: `10.00 – 54.00 minutes`
 
 ---
@@ -143,23 +144,23 @@ Across all **45,584** completed orders:
 
 | Operational Factor | Category / Level | Delivery Count | Mean Duration (min) | Median Duration (min) | Key Finding & Operational Takeaway |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Traffic Density** | Low | 15,476 | **21.27** | 21.00 | Baseline rapid transit conditions. |
-| | Medium | 10,945 | **26.68** | 26.00 | +5.41 min operational delay over Low traffic. |
-| | High | 4,424 | **27.21** | 27.00 | +5.94 min delay over Low traffic. |
-| | Jam | 14,139 | **31.18** | 32.00 | **+9.91 min (+46.6%)** congestion penalty. Primary system bottleneck. |
-| **Weather** | Sunny | 7,282 | **21.86** | 22.00 | Fastest atmospheric transit conditions. |
-| | Stormy / Sandstorms / Windy | 22,500 | **25.84 – 26.17** | 26.00 | Moderate atmospheric impact (+4 min). |
-| | Fog / Cloudy | 15,186 | **28.92** | 29.00 | **+7.06 min (+32.3%)** adverse weather delay. |
-| **Vehicle Type** | Electric Scooter | 3,814 | **24.47** | 24.00 | Fastest vehicle class in urban deliveries. |
-| | Scooter | 15,273 | **24.48** | 24.00 | Highly consistent and efficient mid-tier. |
-| | Motorcycle | 26,429 | **27.59** | 27.00 | Heavy workload fleet; carries longer congestion exposure. |
-| | Bicycle | 68 | **26.44** | 26.00 | Niche short-radius deployment. |
-| **Batch Deliveries** | 0 Deliveries | 14,095 | **21.05** | 20.00 | Single dedicated drop-off route. |
-| | 1 Delivery | 28,151 | **27.57** | 28.00 | +6.52 min overhead. |
-| | 2 Deliveries | 3,400 | **32.84** | 33.00 | +11.79 min overhead. |
-| | 3 Deliveries | 890 | **37.28** | 38.00 | **+16.23 min (+77.1%)** multi-drop batching delay. |
-| **Festival** | No | 44,460 | **25.90** | 26.00 | Standard operating volume. |
-| | Yes | 896 | **45.56** | 46.00 | **+19.66 min (+75.9%)** severe festive demand/kitchen delay. |
+| **Traffic Density** | Low | 15,476 | **21.27** | 20.00 | Baseline rapid transit conditions. |
+| | Medium | 10,945 | **26.70** | 27.00 | +5.43 min mean delay over Low traffic. |
+| | High | 4,423 | **27.24** | 27.00 | +5.97 min mean delay over Low traffic. |
+| | Jam | 14,139 | **31.18** | 31.00 | **+11.00 min median (+9.91 min mean)** congestion gap. |
+| **Weather** | Sunny | 7,282 | **21.86** | 20.00 | Fastest atmospheric transit conditions. |
+| | Stormy / Sandstorms / Windy | 22,500 | **25.87 – 26.12** | 26.00 | Moderate atmospheric difference (+4 min). |
+| | Fog / Cloudy | 15,186 | **28.91 – 28.92** | 28.00 | **+7.06 min (+32.3%)** higher mean than Sunny. |
+| **Vehicle Type** | Electric Scooter | 3,814 | **24.47** | 24.00 | Shares lowest median (IQR: 13.00 min). |
+| | Scooter | 15,273 | **24.48** | 24.00 | Shares lowest median (IQR: 13.00 min). |
+| | Motorcycle | 26,429 | **27.61** | 26.00 | Higher median & wider IQR (14.00 min). |
+| | Bicycle | 68 | **26.43** | 26.00 | Small sample size (`n=68`, IQR: 13.25 min). |
+| **Batch Deliveries** | 0 Deliveries | 14,094 | **22.88** | 22.00 | Single dedicated drop-off route. |
+| | 1 Delivery | 28,151 | **26.85** | 26.00 | +3.97 min mean overhead. |
+| | 2 Deliveries | 1,985 | **40.45** | 40.00 | +17.57 min mean overhead. |
+| | 3 Deliveries | 361 | **47.82** | 48.00 | **+24.94 min** mean escalation vs. 0 deliveries. |
+| **Festival** | No | 44,460 | **25.98** | 25.00 | Standard operating volume. |
+| | Yes | 896 | **45.52** | 45.00 | **+19.54 min** higher mean on festival days. |
 
 ---
 
@@ -209,12 +210,31 @@ All Week 3 visualizations and written interpretations are implemented in [`noteb
 
 ---
 
+## 🏆 Week 4: Final Findings, Recommendations & Conclusions
+
+All end-to-end project verification checks, 6 evidence-backed key findings, and 3 testable operational recommendations are documented in [`notebooks/04_final_analysis.ipynb`](notebooks/04_final_analysis.ipynb).
+
+### 🔑 Six Key Findings
+1. **Delivery Duration Concentrates Around ~26 Minutes with a Mild Right Tail:** 74.3% of orders complete in 15–35 minutes (mean = `26.29 min`, median = `26.00 min`, IQR = `13.00 min`), while `3.96%` (`1,803` orders) take 45–54 minutes.
+2. **Road Traffic Congestion Shows the Largest Routine Delay:** Median duration rises from `20.00 min` in `Low` traffic (`n=15,476`) to `31.00 min` in `Jam` (`n=14,139`), an `+11.00 min` median gap.
+3. **Cloudy & Foggy Weather Coincide with ~7 Minutes Longer Averages:** Mean duration is `28.92 min` (`Cloudy`) and `28.91 min` (`Fog`) vs. `21.86 min` (`Sunny`).
+4. **Distance Alone Explains Only ~10.3% of Duration Variance:** Across `41,944` valid GPS orders, Pearson `r = 0.320` (`r² = 0.103`), with `307` trips `< 5 km` taking `45+ min` and `930` trips `> 15 km` finishing in `<= 20 min`.
+5. **Scooters & Electric Scooters Show Lower Central Durations Than Motorcycles:** Both scooter classes have a `24.00 min` median (`~24.47–24.48 min` mean) vs. `26.00 min` median (`27.61 min` mean) for motorcycles, despite nearly identical mean distances (`9.44–9.76 km`).
+6. **Multi-Order Batching & Festival Days Show Steep Escalations:** Mean duration climbs from `22.88 min` (`0` batches) to `40.45 min` (`2` batches) and `47.82 min` (`3` batches), and from `25.98 min` on normal days to `45.52 min` on `Festival = Yes` (`n=896`).
+
+### 💡 Three Operational Recommendations (Ideas to Investigate)
+1. **Pilot Dynamic ETA Buffers & Pre-Dispatching in `Jam` Traffic / `Fog`/`Cloudy` Weather:** Test congestion-aware ETA padding and earlier rider dispatch during kitchen prep; validate using `Time_Order_picked - Time_Orderd` intervals and an A/B pilot in one `Metropolitan` zone.
+2. **Evaluate Batching Caps (2–3 Orders) During Peak Congestion & Festivals:** Test capping 3-order batching during `Jam` or `Festival` periods to reduce 45+ minute tail deliveries; validate cost-per-order vs. SLA trade-offs via a controlled hub pilot.
+3. **Audit GPS Telemetry Drops & Stratify Vehicle Performance:** Investigate why `3,640` orders (`7.99%`) record `(0, 0)`/placeholder coordinates and run stratified vehicle comparisons controlling for traffic, city tier, and batching.
+
+---
+
 ## 🛠️ Tools & Libraries Used
 - **Python 3.11+**: Primary runtime environment.
-- **Pandas (2.0+)**: Data manipulation, inspection, and cleaning transformations.
-- **NumPy (1.24+)**: Vectorized operations and sentinel value handling.
-- **Matplotlib & Seaborn**: Quality audit visualization (missing value distribution chart).
-- **Jupyter Notebook**: Interactive documentation and reproducible pipeline execution.
+- **Pandas (2.0+) & NumPy (1.24+)**: Data cleaning, vectorized distance calculations, and aggregation.
+- **SciPy (1.11+)**: Rank-based Spearman correlation analysis.
+- **Matplotlib & Seaborn**: Distribution, categorical, scatter, and box plot visualizations.
+- **Jupyter Notebook**: Reproducible execution and Markdown documentation across all 4 weeks.
 
 ---
 
@@ -222,8 +242,8 @@ All Week 3 visualizations and written interpretations are implemented in [`noteb
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/food-delivery-data-analysis.git
-cd food-delivery-data-analysis
+git clone https://github.com/Tejas-952007/Food-Delivery-Data-Analysis-X-Kagnus.git
+cd Food-Delivery-Data-Analysis-X-Kagnus
 ```
 
 ### 2. Create and Activate a Virtual Environment
@@ -238,15 +258,19 @@ source .venv/bin/activate  # On Linux/macOS
 pip install -r requirements.txt
 ```
 
-### 4. Run the Jupyter Notebook
+### 4. Run the Weekly Notebooks in Order
 ```bash
 jupyter notebook notebooks/01_data_understanding_and_cleaning.ipynb
+jupyter notebook notebooks/02_exploratory_data_analysis.ipynb
+jupyter notebook notebooks/03_visualization.ipynb
+jupyter notebook notebooks/04_final_analysis.ipynb
 ```
-You can also run all cells from top to bottom; the notebook executes cleanly without errors and will generate `data/processed/cleaned_food_delivery.csv` and verify it automatically.
 
 ---
 
-## 📝 Assumptions & Limitations
-1. **Missing GPS Coordinates**: 3,640 trips have missing GPS coordinates (`NaN`). For distance-based speed analysis in Week 2, these rows must be analyzed separately or excluded specifically from distance-dependent models.
-2. **Delivery Partner Minors**: 38 delivery executives have an age of 15. These records were retained to prevent data fabrication, but will be treated as flagged anomalies in demographic analyses.
-3. **Imputation Policy**: Imputation was intentionally deferred to Week 2 so that exploratory analysis can inform whether median, mean, or model-based imputation is most appropriate for each feature.
+## 📝 Assumptions, Limitations & Next Steps
+1. **Association ≠ Causation:** All findings are observational; traffic, weather, vehicle, and batching comparisons do not prove causal effects without controlled pilots.
+2. **Missing GPS Coordinates & Straight-Line Distance:** `3,640` rows (`7.99%`) had placeholder GPS coordinates and were excluded from distance analysis; Haversine distance also underestimates road travel distance.
+3. **Retained Missing Operational Fields:** Missing values (`Delivery_person_Ratings`: 1,908; `Delivery_person_Age`: 1,854; `Time_Orderd`: 1,731; `City`: 1,200; `multiple_deliveries`: 993; `Weather_conditions`: 616; `Road_traffic_density`: 601; `Festival`: 228) were retained as `NaN` rather than fabricated.
+4. **Subgroup Sample Imbalance:** Smaller segments (`bicycle`: `n=68`, `Semi-Urban`: `n=164`, `3` deliveries: `n=361`, `Festival = Yes`: `n=896`) carry higher variance.
+5. **Next Steps:** Decompose kitchen prep vs. transit time using order/pickup timestamps, build cross-validated predictive models, and fix rider-app GPS capture drops.
