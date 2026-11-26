@@ -212,20 +212,21 @@ All Week 3 visualizations and written interpretations are implemented in [`noteb
 
 ## 🏆 Week 4: Final Findings, Recommendations & Conclusions
 
-All end-to-end project verification checks, 6 evidence-backed key findings, and 3 testable operational recommendations are documented in [`notebooks/04_final_analysis.ipynb`](notebooks/04_final_analysis.ipynb).
+All end-to-end project verification checks (25/25 Week 2 & Week 3 metrics reproduced), 7 evidence-backed key findings, and 3 testable operational recommendations are documented in [`notebooks/04_final_analysis.ipynb`](notebooks/04_final_analysis.ipynb).
 
-### 🔑 Six Key Findings
-1. **Delivery Duration Concentrates Around ~26 Minutes with a Mild Right Tail:** 74.3% of orders complete in 15–35 minutes (mean = `26.29 min`, median = `26.00 min`, IQR = `13.00 min`), while `3.96%` (`1,803` orders) take 45–54 minutes.
-2. **Road Traffic Congestion Shows the Largest Routine Delay:** Median duration rises from `20.00 min` in `Low` traffic (`n=15,476`) to `31.00 min` in `Jam` (`n=14,139`), an `+11.00 min` median gap.
-3. **Cloudy & Foggy Weather Coincide with ~7 Minutes Longer Averages:** Mean duration is `28.92 min` (`Cloudy`) and `28.91 min` (`Fog`) vs. `21.86 min` (`Sunny`).
-4. **Distance Alone Explains Only ~10.3% of Duration Variance:** Across `41,944` valid GPS orders, Pearson `r = 0.320` (`r² = 0.103`), with `307` trips `< 5 km` taking `45+ min` and `930` trips `> 15 km` finishing in `<= 20 min`.
-5. **Scooters & Electric Scooters Show Lower Central Durations Than Motorcycles:** Both scooter classes have a `24.00 min` median (`~24.47–24.48 min` mean) vs. `26.00 min` median (`27.61 min` mean) for motorcycles, despite nearly identical mean distances (`9.44–9.76 km`).
-6. **Multi-Order Batching & Festival Days Show Steep Escalations:** Mean duration climbs from `22.88 min` (`0` batches) to `40.45 min` (`2` batches) and `47.82 min` (`3` batches), and from `25.98 min` on normal days to `45.52 min` on `Festival = Yes` (`n=896`).
+### 🔑 Seven Key Findings
+1. **Most Deliveries Fall in a Predictable Middle Range, with a Long-Delivery Tail:** Mean = `26.29 min`, median = `26.00 min`, SD = `9.38 min`, IQR = `19–32 min`; `74.3%` finish in `15–35 min`, while `1,803` deliveries (`3.96%`) take `45+ min`.
+2. **Heavier Traffic Is Associated with Slower and Less Predictable Deliveries:** Median rises from `20 min` (`Low`, SD `6.8`) to `27 min` (`Medium`/`High`) and `31 min` (`Jam`, SD `9.9`, `31.4%` of labeled orders); `High` traffic orders are shorter on average (`4.4 km` vs `11.1 km`), showing traffic and distance are entangled.
+3. **Cloudy & Fog Weather Coincide with Slower Deliveries When Traffic Is Not Light:** Mean is `28.92 min` (`Cloudy`) and `28.91 min` (`Fog`) vs `21.86 min` (`Sunny`); under `Sunny` weather medians stay `19–21 min` across all traffic levels, whereas `Cloudy`/`Fog` at `Medium`–`Jam` traffic reach `28–37 min`.
+4. **Concurrent Orders (`multiple_deliveries`) Show the Steepest Duration Increase:** Mean rises from `22.88 min` (`0` concurrent) and `26.85 min` (`1`) to `40.45 min` (`2`, `n=1,985`) and `47.82 min` (`3`, `n=361`), holding across every traffic level (`5.3%` of orders have 2–3 concurrent drops).
+5. **Distance Explains Only a Small Share of Delivery Time:** Across `41,944` valid GPS orders, Pearson `r = 0.320`, Spearman `ρ = 0.319` (`r² = 0.103`, ~`0.54 min/km`), flattening past `10 km`; `1,605` of `8,046` trips `> 15 km` (`20%`) still finished in `≤ 20 min`.
+6. **Motorcycles Are Slightly Slower Than Scooters Despite Similar Distance & Load:** `motorcycle` (`n=26,429`) has median `26 min` (mean `27.61 min`) vs `24 min` for `scooter` (`24.48 min`) and `electric_scooter` (`24.47 min`), even with comparable mean distance (`9.69` vs `9.76 km`) and concurrent load (`0.78` vs `0.69`).
+7. **Partner Age & Rating Correlate with Duration, but Do Not Measure Experience:** Rating correlates negatively (`r = -0.341`, `≤4.0` avg `35.9 min` vs `4.6–4.8` avg `24.3 min`) and age positively (`r = 0.300`, `30+` avg `29.5 min` vs `<30` avg `23.0 min`); lacking a tenure field, these are leads for investigation rather than proof of partner skill.
 
 ### 💡 Three Operational Recommendations (Ideas to Investigate)
-1. **Pilot Dynamic ETA Buffers & Pre-Dispatching in `Jam` Traffic / `Fog`/`Cloudy` Weather:** Test congestion-aware ETA padding and earlier rider dispatch during kitchen prep; validate using `Time_Order_picked - Time_Orderd` intervals and an A/B pilot in one `Metropolitan` zone.
-2. **Evaluate Batching Caps (2–3 Orders) During Peak Congestion & Festivals:** Test capping 3-order batching during `Jam` or `Festival` periods to reduce 45+ minute tail deliveries; validate cost-per-order vs. SLA trade-offs via a controlled hub pilot.
-3. **Audit GPS Telemetry Drops & Stratify Vehicle Performance:** Investigate why `3,640` orders (`7.99%`) record `(0, 0)`/placeholder coordinates and run stratified vehicle comparisons controlling for traffic, city tier, and batching.
+1. **Review Concurrent Order Batching Limits:** Trial limiting 2–3 concurrent deliveries (especially in `Medium`–`Jam` traffic) against a control group, weighing delivery-time consistency against cost-per-order savings (`2,346` orders with 2–3 drops).
+2. **Make Arrival-Time Estimates Sensitive to Traffic × Weather Together:** Test condition-based ETA buffers (`Cloudy`/`Fog` + `Medium`–`Jam` traffic, medians `28–37 min`) over distance-only estimates (`r² = 0.103`), validated with actual road distance and time-of-day/city controls.
+3. **Investigate the Motorcycle–Scooter Gap & Lower-Rated Partner Groups:** Review areas, order types, and preparation times behind slower motorcycle (`27.61 min`) and lower-rated (`≤4.0`, `35.9 min`) trips via like-for-like comparisons before changing fleet or partner policy.
 
 ---
 
