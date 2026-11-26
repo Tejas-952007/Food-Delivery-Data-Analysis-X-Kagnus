@@ -51,13 +51,7 @@ food-delivery-data-analysis/
 │   ├── 02_traffic_comparison.png                 # Week 3: Median duration by traffic category
 │   ├── 03_weather_comparison.png                 # Week 3: Average duration by weather condition
 │   ├── 04_distance_vs_duration.png               # Week 3: Distance vs duration scatter plot
-│   ├── 05_vehicle_comparison.png                 # Week 3: Duration distribution by vehicle (boxplot)
-│   ├── 01_delivery_duration_baseline.png         # Week 2: Target distribution histogram & KDE
-│   ├── 02_distance_vs_duration.png               # Week 2: Scatter plot with fitted trend line
-│   ├── 03_operational_comparisons_traffic_weather_vehicle.png
-│   ├── 04_boxplots_duration_by_factors.png       # Week 2: Boxplots across traffic & weather tiers
-│   ├── 05_traffic_weather_heatmap.png            # Week 2: Cross-tabulated mean duration matrix
-│   └── 06_distance_bands_and_partner_metrics.png # Week 2: Distance bands, age & rating trends
+│   └── 05_vehicle_comparison.png                 # Week 3: Duration distribution by vehicle (boxplot)
 ├── docs/
 │   └── cleaning_log.csv                          # Formal audit log recording issues, counts & rationales
 ├── README.md                                     # Project overview, findings & execution guide
@@ -186,17 +180,6 @@ To verify that vehicle differences were not merely artifacts of trip length:
 - Mean distance for **scooters**: `9.76 km`
 - Mean distance for **electric scooters**: `9.44 km`
 Because distance is evenly balanced across fleets, the observed delivery speed advantage of electric scooters and scooters is operational, not distance-driven.
-
----
-
-### 🖼️ Exported Visualizations
-All exploratory charts are exported at 150 DPI in [`visualizations/`](file:///home/tejas/Kagnus_internship/food-delivery-data-analysis/visualizations/):
-1. `01_delivery_duration_baseline.png` — Distribution of delivery duration (histogram & KDE).
-2. `02_distance_vs_duration.png` — Scatter plot with linear regression trend line.
-3. `03_operational_comparisons_traffic_weather_vehicle.png` — Bar plots comparing mean durations across traffic, weather, and vehicle types.
-4. `04_boxplots_duration_by_factors.png` — Boxplots showing median and interquartile spread by traffic and weather.
-5. `05_traffic_weather_heatmap.png` — Cross-tabulation heatmap of mean delivery times under joint traffic × weather conditions.
-6. `06_distance_bands_and_partner_metrics.png` — Segmented performance by distance bands, partner age, and rating tiers.
 
 ---
 
