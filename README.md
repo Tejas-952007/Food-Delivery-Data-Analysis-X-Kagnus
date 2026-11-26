@@ -4,6 +4,7 @@
 [![Pandas](https://img.shields.io/badge/Pandas-2.0%2B-150458.svg)](https://pandas.pydata.org/)
 [![NumPy](https://img.shields.io/badge/NumPy-1.24%2B-013243.svg)](https://numpy.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Project Documentation](https://img.shields.io/badge/Project%20Documentation-Final%20Report%20(DOCX)-2B5B84.svg)](docs/Kagnus_Internship_Report_Tejas_Ingle.docx)
 
 ## 📌 Project Overview
 This repository contains the end-to-end coursework and deliverables for the **Food Delivery Data Analysis Internship** at **Kagnus**. Working as a Junior Data Analyst supporting the food-delivery operations team, the multi-week goal is to analyze operational delivery logs, extract actionable business insights, identify supply chain and fulfillment bottlenecks, and build interactive KPI visualizations.
