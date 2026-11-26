@@ -54,7 +54,8 @@ food-delivery-data-analysis/
 │   ├── 04_distance_vs_duration.png               # Week 3: Distance vs duration scatter plot
 │   └── 05_vehicle_comparison.png                 # Week 3: Duration distribution by vehicle (boxplot)
 ├── docs/
-│   └── cleaning_log.csv                          # Formal audit log recording issues, counts & rationales
+│   ├── cleaning_log.csv                          # Formal audit log recording issues, counts & rationales
+│   └── Kagnus_Internship_Report_Tejas_Ingle.docx # Complete 4-week final internship project report
 ├── README.md                                     # Project overview, findings & execution guide
 └── requirements.txt                              # Python environment package dependencies
 ```
