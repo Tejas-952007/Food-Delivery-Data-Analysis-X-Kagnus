@@ -10,8 +10,8 @@ This repository contains the end-to-end coursework and deliverables for the **Fo
 
 The project follows a 4-week structured progression:
 - **Week 1 (Complete)**: Dataset Understanding, Comprehensive Quality Audit & Data Cleaning.
-- **Week 2 (Complete / Current)**: Exploratory Data Analysis (EDA) & Operational Driver Analysis.
-- **Week 3 (Upcoming)**: Core Operational KPI Analysis & Visualizations.
+- **Week 2 (Complete)**: Exploratory Data Analysis (EDA) & Operational Driver Analysis.
+- **Week 3 (Complete / Current)**: Visualization & Interpretation.
 - **Week 4 (Upcoming)**: Business Findings, Strategic Recommendations & Final Executive Report.
 
 ---
@@ -44,14 +44,20 @@ food-delivery-data-analysis/
 │       └── cleaned_food_delivery.csv             # Cleaned, standardized dataset (45,584 rows)
 ├── notebooks/
 │   ├── 01_data_understanding_and_cleaning.ipynb  # Week 1: Data Understanding & Cleaning Pipeline
-│   └── 02_exploratory_data_analysis.ipynb        # Week 2: Comprehensive Exploratory Data Analysis
-├── visualizations/                               # Exported high-resolution EDA figures
-│   ├── 01_delivery_duration_baseline.png         # Target distribution histogram & KDE
-│   ├── 02_distance_vs_duration.png               # Scatter plot with fitted trend line
+│   ├── 02_exploratory_data_analysis.ipynb        # Week 2: Comprehensive Exploratory Data Analysis
+│   └── 03_visualization.ipynb                    # Week 3: Visualization & Interpretation
+├── visualizations/                               # Exported high-resolution figures (150 DPI)
+│   ├── 01_delivery_duration_distribution.png     # Week 3: Delivery duration histogram
+│   ├── 02_traffic_comparison.png                 # Week 3: Median duration by traffic category
+│   ├── 03_weather_comparison.png                 # Week 3: Average duration by weather condition
+│   ├── 04_distance_vs_duration.png               # Week 3: Distance vs duration scatter plot
+│   ├── 05_vehicle_comparison.png                 # Week 3: Duration distribution by vehicle (boxplot)
+│   ├── 01_delivery_duration_baseline.png         # Week 2: Target distribution histogram & KDE
+│   ├── 02_distance_vs_duration.png               # Week 2: Scatter plot with fitted trend line
 │   ├── 03_operational_comparisons_traffic_weather_vehicle.png
-│   ├── 04_boxplots_duration_by_factors.png       # Boxplots across traffic & weather tiers
-│   ├── 05_traffic_weather_heatmap.png            # Cross-tabulated mean duration matrix
-│   └── 06_distance_bands_and_partner_metrics.png # Distance bands, age groups & rating trends
+│   ├── 04_boxplots_duration_by_factors.png       # Week 2: Boxplots across traffic & weather tiers
+│   ├── 05_traffic_weather_heatmap.png            # Week 2: Cross-tabulated mean duration matrix
+│   └── 06_distance_bands_and_partner_metrics.png # Week 2: Distance bands, age & rating trends
 ├── docs/
 │   └── cleaning_log.csv                          # Formal audit log recording issues, counts & rationales
 ├── README.md                                     # Project overview, findings & execution guide
@@ -191,6 +197,32 @@ All exploratory charts are exported at 150 DPI in [`visualizations/`](file:///ho
 4. `04_boxplots_duration_by_factors.png` — Boxplots showing median and interquartile spread by traffic and weather.
 5. `05_traffic_weather_heatmap.png` — Cross-tabulation heatmap of mean delivery times under joint traffic × weather conditions.
 6. `06_distance_bands_and_partner_metrics.png` — Segmented performance by distance bands, partner age, and rating tiers.
+
+---
+
+## 📊 Week 3: Visualization & Interpretation
+
+All Week 3 visualizations and written interpretations are implemented in [`notebooks/03_visualization.ipynb`](notebooks/03_visualization.ipynb) using `cleaned_food_delivery.csv` (`N = 45,584`). Each chart includes clear axis units, actual calculated values, and a cautious 2–3 sentence interpretation with documented limitations.
+
+1. **Delivery Duration Distribution — [`01_delivery_duration_distribution.png`](visualizations/01_delivery_duration_distribution.png)**
+   - **Purpose:** Inspect the overall frequency distribution, central tendency, and tail behavior of delivery durations.
+   - **Main Pattern:** 74.3% of orders cluster between 15 and 35 minutes (mean = `26.29 min`, median = `26.00 min`), with a mild right tail extending to 45–54 minutes (`3.96%` of orders).
+
+2. **Traffic Comparison — [`02_traffic_comparison.png`](visualizations/02_traffic_comparison.png)**
+   - **Purpose:** Compare median delivery duration across road traffic density levels (`Low`, `Medium`, `High`, `Jam`) without extreme-value distortion.
+   - **Main Pattern:** Median duration rises from `20.0 min` (`Low`, `n=15,476`) to `27.0 min` (`Medium`/`High`) and `31.0 min` (`Jam`, `n=14,139`), an 11-minute gap associated with congestion (601 missing traffic rows excluded).
+
+3. **Weather Comparison — [`03_weather_comparison.png`](visualizations/03_weather_comparison.png)**
+   - **Purpose:** Evaluate average delivery duration across all six weather categories.
+   - **Main Pattern:** `Cloudy` (`28.92 min`) and `Fog` (`28.91 min`) show the highest average durations, whereas `Sunny` (`21.86 min`) is roughly 7 minutes faster on average (616 missing weather rows excluded).
+
+4. **Distance vs. Delivery Duration — [`04_distance_vs_duration.png`](visualizations/04_distance_vs_duration.png)**
+   - **Purpose:** Assess the direction, strength, and unusual points in the relationship between straight-line Haversine distance and delivery duration (`n=41,944` valid GPS rows).
+   - **Main Pattern:** Positive but weak-to-moderate correlation (`Pearson r = 0.320`, `r² = 0.103`, `Spearman ρ = 0.319`), showing that distance alone explains ~10.3% of duration variance and unusual short-slow / long-fast trips occur due to non-distance factors.
+
+5. **Vehicle Comparison — [`05_vehicle_comparison.png`](visualizations/05_vehicle_comparison.png)**
+   - **Purpose:** Compare delivery-duration spread, median, interquartile range (IQR), and outliers across vehicle types.
+   - **Main Pattern:** `electric_scooter` and `scooter` share a `24.0 min` median (IQR = `13.0 min`, with 1 and 3 upper outliers > 49.5 min), compared to `26.0 min` for `motorcycle` (IQR = `14.0 min`) and `bicycle` (`n=68`, imbalanced sample size).
 
 ---
 
